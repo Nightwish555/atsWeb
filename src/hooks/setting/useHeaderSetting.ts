@@ -58,6 +58,8 @@ export function useHeaderSetting() {
 
   const getShowSearch = computed(() => appStore.getHeaderSetting.showSearch)
 
+  const getUseLockPage = computed(() => appStore.getHeaderSetting.useLockPage)
+
   const getShowFullScreen = computed(() => appStore.getHeaderSetting.showFullScreen)
 
   const getShowNotice = computed(() => appStore.getHeaderSetting.showNotice)
@@ -86,6 +88,7 @@ export function useHeaderSetting() {
     getShowDoc,
     getShowSearch,
     getHeaderTheme,
+    getUseLockPage,
     getShowFullScreen,
     getShowNotice,
     getShowBread,

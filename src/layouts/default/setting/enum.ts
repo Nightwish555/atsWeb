@@ -43,6 +43,7 @@ export enum HandlerEnum {
   TABS_SHOW,
   TABS_SHOW_FOLD,
 
+  LOCK_TIME,
   FULL_CONTENT,
   CONTENT_MODE,
   SHOW_BREADCRUMB,

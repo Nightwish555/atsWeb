@@ -6,10 +6,16 @@ export default {
     dropdownItemLoginOut: 'Login Out',
 
     tooltipErrorLog: 'Error log',
+    tooltipLock: 'Lock screen',
     tooltipNotify: 'Notification',
 
     tooltipEntryFull: 'Full Screen',
     tooltipExitFull: 'Exit Full Screen',
+
+    // lock
+    lockScreenPassword: 'Lock screen password',
+    lockScreen: 'Lock screen',
+    lockScreenBtn: 'Locking',
 
     home: 'Home',
   },
@@ -93,6 +99,9 @@ export default {
     switchLoading: 'Switch Loading',
     switchAnimation: 'Switch animation',
     animationType: 'Animation type',
+
+    autoScreenLock: 'Auto screen lock',
+    notAutoScreenLock: 'Not auto lock',
 
     fixedHeader: 'Fixed header',
     fixedSideBar: 'Fixed Sidebar',

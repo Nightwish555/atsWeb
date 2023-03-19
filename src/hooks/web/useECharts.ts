@@ -79,12 +79,7 @@ export function useECharts(
   }
 
   function resize() {
-    chartInstance?.resize({
-      animation: {
-        duration: 300,
-        easing: 'quadraticIn',
-      },
-    })
+    chartInstance?.resize()
   }
 
   watch(

@@ -176,6 +176,16 @@ const sysRoute = {
       },
       component: '/demo/system/role/index',
     },
+
+    {
+      path: 'menu',
+      name: 'MenuManagement',
+      meta: {
+        title: 'routes.demo.system.menu',
+        ignoreKeepAlive: true,
+      },
+      component: '/demo/system/menu/index',
+    },
     {
       path: 'dept',
       name: 'DeptManagement',

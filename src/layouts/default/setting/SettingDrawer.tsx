@@ -50,9 +50,10 @@ export default defineComponent({
       getShowBreadCrumb,
       getShowBreadCrumbIcon,
       getShowLogo,
-      // getFullContent,
+      getFullContent,
       getColorWeak,
       getGrayMode,
+      getLockTime,
       getShowDarkModeToggle,
       getThemeColor,
     } = useRootSetting()
@@ -253,6 +254,17 @@ export default defineComponent({
             options={contentModeOptions}
           />
           <InputNumberItem
+            title={t('layout.setting.autoScreenLock')}
+            min={0}
+            event={HandlerEnum.LOCK_TIME}
+            defaultValue={unref(getLockTime)}
+            formatter={(value: string) => {
+              return parseInt(value) === 0
+                ? `0(${t('layout.setting.notAutoScreenLock')})`
+                : `${value}${t('layout.setting.minute')}`
+            }}
+          />
+          <InputNumberItem
             title={t('layout.setting.expandedMenuWidth')}
             max={600}
             min={100}
@@ -332,11 +344,11 @@ export default defineComponent({
             event={HandlerEnum.SHOW_FOOTER}
             def={unref(getShowFooter)}
           />
-          {/* <SwitchItem
+          <SwitchItem
             title={t('layout.setting.fullContent')}
             event={HandlerEnum.FULL_CONTENT}
             def={unref(getFullContent)}
-          /> */}
+          />
 
           <SwitchItem
             title={t('layout.setting.grayMode')}
@@ -389,12 +401,12 @@ export default defineComponent({
         {...attrs}
         title={t('layout.setting.drawerTitle')}
         width={330}
-        class="setting-drawer"
+        wrapClassName="setting-drawer"
       >
         {unref(getShowDarkModeToggle) && <Divider>{() => t('layout.setting.darkMode')}</Divider>}
         {unref(getShowDarkModeToggle) && <AppDarkModeToggle class="mx-auto" />}
-        {/* <Divider>{() => t('layout.setting.navMode')}</Divider> */}
-        {/* {renderSidebar()} */}
+        <Divider>{() => t('layout.setting.navMode')}</Divider>
+        {renderSidebar()}
         <Divider>{() => t('layout.setting.sysTheme')}</Divider>
         {renderMainTheme()}
         <Divider>{() => t('layout.setting.headerTheme')}</Divider>

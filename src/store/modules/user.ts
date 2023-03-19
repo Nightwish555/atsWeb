@@ -6,15 +6,15 @@ import { RoleEnum } from '/@/enums/roleEnum'
 import { PageEnum } from '/@/enums/pageEnum'
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum'
 import { getAuthCache, setAuthCache } from '/@/utils/auth'
-import { GetUserInfoModel, LoginParams, RegisterParams } from '/@/api/sys/model/userModel'
-import { doLogout, loginApi, registerApi } from '/@/api/sys/user'
+import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel'
+import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user'
 import { useI18n } from '/@/hooks/web/useI18n'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { router } from '/@/router'
 import { usePermissionStore } from '/@/store/modules/permission'
 import { RouteRecordRaw } from 'vue-router'
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic'
-// import { isArray } from '/@/utils/is'
+import { isArray } from '/@/utils/is'
 import { h } from 'vue'
 
 interface UserState {
@@ -90,22 +90,21 @@ export const useUserStore = defineStore({
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params
-
         const data = await loginApi(loginParams, mode)
 
-        const { token } = data.data
+        const { token } = data
 
         // save token
         this.setToken(token)
-        return this.afterLoginAction(data.data.user, goHome)
+        return this.afterLoginAction(goHome)
       } catch (error) {
         return Promise.reject(error)
       }
     },
-    async afterLoginAction(userInfo: any, goHome?: boolean): Promise<GetUserInfoModel | null> {
+    async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null
       // get user info
-      // const userInfo = await this.getUserInfoAction()
+      const userInfo = await this.getUserInfoAction()
 
       const sessionTimeout = this.sessionTimeout
       if (sessionTimeout) {
@@ -124,26 +123,29 @@ export const useUserStore = defineStore({
       }
       return userInfo
     },
-    // async getUserInfoAction(): Promise<UserInfo | null> {
-    //   if (!this.getToken) return null
-    //   const userInfo = await getUserInfo()
-    //   const { roles = [] } = userInfo
-    //   if (isArray(roles)) {
-    //     const roleList = roles.map((item) => item.value) as RoleEnum[]
-    //     this.setRoleList(roleList)
-    //   } else {
-    //     userInfo.roles = []
-    //     this.setRoleList([])
-    //   }
-    //   this.setUserInfo(userInfo)
-    //   return userInfo
-    // },
+    async getUserInfoAction(): Promise<UserInfo | null> {
+      if (!this.getToken) return null
+      // const userInfo = await getUserInfo()
+      // TODO 临时改动 网页刷新获取用户Info 其他地方也有通过getUserInfo获取信息的函数 可能需要后端那边加接口
+      const userInfo = this.getUserInfo
+      const { roles = [] } = userInfo
+
+      // TODO 这里逻辑不太对 不懂为何要赋值一个空的RoleList
+      if (isArray(roles)) {
+        const roleList = roles.map((item) => item.value) as RoleEnum[]
+        this.setRoleList(roleList)
+      } else {
+        userInfo.roles = []
+        this.setRoleList([])
+      }
+      this.setUserInfo(userInfo)
+      return userInfo
+    },
     /**
      * @description: logout
      */
     async logout(goLogin = false) {
-      const token = this.getToken
-      if (token) {
+      if (this.getToken) {
         try {
           await doLogout()
         } catch {
@@ -157,14 +159,6 @@ export const useUserStore = defineStore({
     },
 
     /**
-     * @description: register
-     */
-    async register(params: RegisterParams) {
-      const register = await registerApi(params)
-      return register
-    },
-
-    /**
      * @description: Confirm before logging out
      */
     confirmLoginOut() {
@@ -172,7 +166,7 @@ export const useUserStore = defineStore({
       const { t } = useI18n()
       createConfirm({
         iconType: 'warning',
-        title: () => h('span', t('sys.app.Tip')),
+        title: () => h('span', t('sys.app.logoutTip')),
         content: () => h('span', t('sys.app.logoutMessage')),
         onOk: async () => {
           await this.logout(true)

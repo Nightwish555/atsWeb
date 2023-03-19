@@ -19,6 +19,12 @@
         />
         <MenuDivider v-if="getShowDoc" />
         <MenuItem
+          v-if="getUseLockPage"
+          key="lock"
+          :text="t('layout.header.tooltipLock')"
+          icon="ion:lock-closed-outline"
+        />
+        <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
@@ -26,11 +32,11 @@
       </Menu>
     </template>
   </Dropdown>
+  <LockAction @register="register" />
 </template>
 <script lang="ts">
   // components
   import { Dropdown, Menu } from 'ant-design-vue'
-  import type { MenuInfo } from 'ant-design-vue/lib/menu/src/interface'
 
   import { defineComponent, computed } from 'vue'
 
@@ -48,7 +54,7 @@
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent'
 
-  type MenuEvent = 'logout' | 'doc'
+  type MenuEvent = 'logout' | 'doc' | 'lock'
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -57,6 +63,7 @@
       Menu,
       MenuItem: createAsyncComponent(() => import('./DropMenuItem.vue')),
       MenuDivider: Menu.Divider,
+      LockAction: createAsyncComponent(() => import('../lock/LockModal.vue')),
     },
     props: {
       theme: propTypes.oneOf(['dark', 'light']),
@@ -64,7 +71,7 @@
     setup() {
       const { prefixCls } = useDesign('header-user-dropdown')
       const { t } = useI18n()
-      const { getShowDoc } = useHeaderSetting()
+      const { getShowDoc, getUseLockPage } = useHeaderSetting()
       const userStore = useUserStore()
 
       const getUserInfo = computed(() => {
@@ -72,7 +79,11 @@
         return { realName, avatar: avatar || headerImg, desc }
       })
 
-      const [register] = useModal()
+      const [register, { openModal }] = useModal()
+
+      function handleLock() {
+        openModal(true)
+      }
 
       //  login out
       function handleLoginOut() {
@@ -84,13 +95,16 @@
         openWindow(DOC_URL)
       }
 
-      function handleMenuClick(e: MenuInfo) {
-        switch (e.key as MenuEvent) {
+      function handleMenuClick(e: { key: MenuEvent }) {
+        switch (e.key) {
           case 'logout':
             handleLoginOut()
             break
           case 'doc':
             openDoc()
+            break
+          case 'lock':
+            handleLock()
             break
         }
       }
@@ -102,6 +116,7 @@
         handleMenuClick,
         getShowDoc,
         register,
+        getUseLockPage,
       }
     },
   })

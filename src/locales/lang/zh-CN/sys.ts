@@ -21,11 +21,7 @@ export default {
     errMsg504: '网络超时!',
     errMsg505: 'http版本不支持该请求!',
   },
-  app: {
-    Tip: '温馨提醒',
-    logoutMessage: '是否确认退出系统?',
-    menuLoading: '菜单加载中...',
-  },
+  app: { logoutTip: '温馨提醒', logoutMessage: '是否确认退出系统?', menuLoading: '菜单加载中...' },
   errorLog: {
     tableTitle: '错误日志列表',
     tableColumnType: '类型',
@@ -54,21 +50,29 @@ export default {
     networkErrorTitle: '网络错误',
     networkErrorSubTitle: '抱歉，您的网络连接已断开，请检查您的网络！',
   },
+  lock: {
+    unlock: '点击解锁',
+    alert: '锁屏密码错误',
+    backToLogin: '返回登录',
+    entry: '进入系统',
+    placeholder: '请输入锁屏密码或者用户密码',
+  },
   login: {
     backSignIn: '返回',
     signInFormTitle: '登录',
     mobileSignInFormTitle: '手机登录',
+    qrSignInFormTitle: '二维码登录',
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: '开箱即用的接口自动化平台',
+    signInTitle: '开箱即用的中后台管理系统',
     signInDesc: '输入您的个人详细信息开始使用！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
     loginButton: '登录',
     registerButton: '注册',
-    rememberMe: '自动登录',
+    rememberMe: '记住我',
     forgetPassword: '忘记密码?',
     otherSignIn: '其他登录方式',
 
@@ -79,16 +83,13 @@ export default {
     // placeholder
     accountPlaceholder: '请输入账号',
     passwordPlaceholder: '请输入密码',
-    namePlaceheolder: '请输入姓名',
     smsPlaceholder: '请输入验证码',
-    emailPlaceholder: '请输入邮箱',
     mobilePlaceholder: '请输入手机号码',
     policyPlaceholder: '勾选后才能注册',
     diffPwd: '两次输入密码不一致',
 
     userName: '账号',
     password: '密码',
-    name: '姓名',
     confirmPassword: '确认密码',
     email: '邮箱',
     smsCode: '短信验证码',

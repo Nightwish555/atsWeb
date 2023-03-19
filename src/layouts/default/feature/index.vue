@@ -15,6 +15,7 @@
     name: 'LayoutFeatures',
     components: {
       BackTop,
+      LayoutLockPage: createAsyncComponent(() => import('/@/views/sys/lock/index.vue')),
       SettingDrawer: createAsyncComponent(() => import('/@/layouts/default/setting/index.vue')),
       SessionTimeoutLogin,
     },
@@ -22,7 +23,7 @@
       const { getUseOpenBackTop, getShowSettingButton, getSettingButtonPosition, getFullContent } =
         useRootSetting()
       const userStore = useUserStoreWithOut()
-      const { prefixCls } = useDesign('setting-drawer-feature')
+      const { prefixCls } = useDesign('setting-drawer-fearure')
       const { getShowHeader } = useHeaderSetting()
 
       const getIsSessionTimeout = computed(() => userStore.getSessionTimeout)
@@ -51,13 +52,14 @@
 </script>
 
 <template>
+  <LayoutLockPage />
   <BackTop v-if="getUseOpenBackTop" :target="getTarget" />
   <SettingDrawer v-if="getIsFixedSettingDrawer" :class="prefixCls" />
   <SessionTimeoutLogin v-if="getIsSessionTimeout" />
 </template>
 
 <style lang="less">
-  @prefix-cls: ~'@{namespace}-setting-drawer-feature';
+  @prefix-cls: ~'@{namespace}-setting-drawer-fearure';
 
   .@{prefix-cls} {
     position: absolute;

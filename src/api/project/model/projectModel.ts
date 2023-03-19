@@ -1,5 +1,5 @@
 /**
- * @description: project interface parameters
+ * @description: project request参数
  */
 export interface ProjectParams {
   name: string
@@ -9,6 +9,18 @@ export interface ProjectParams {
   description: string
 }
 
-export interface ProjectResultModal {
+/**
+ * @description: project api response参数
+ */
+export interface ProjectModal {
   data: any
+}
+
+/**
+ * @description: project list request参数
+ */
+export interface ProjectListParams {
+  page: number
+  size: number
+  name: string
 }

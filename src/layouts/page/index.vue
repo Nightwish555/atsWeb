@@ -17,16 +17,17 @@
         <keep-alive v-if="openCache" :include="getCaches">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
-        <div v-else :key="route.name">
-          <component :is="Component" :key="route.fullPath" />
-        </div>
+        <component v-else :is="Component" :key="route.fullPath" />
       </transition>
     </template>
   </RouterView>
+  <FrameLayout v-if="getCanEmbedIFramePage" />
 </template>
 
 <script lang="ts">
   import { computed, defineComponent, unref } from 'vue'
+
+  import FrameLayout from '/@/layouts/iframe/index.vue'
 
   import { useRootSetting } from '/@/hooks/setting/useRootSetting'
 
@@ -38,11 +39,12 @@
 
   export default defineComponent({
     name: 'PageLayout',
+    components: { FrameLayout },
     setup() {
       const { getShowMultipleTab } = useMultipleTabSetting()
       const tabStore = useMultipleTabStore()
 
-      const { getOpenKeepAlive } = useRootSetting()
+      const { getOpenKeepAlive, getCanEmbedIFramePage } = useRootSetting()
 
       const { getBasicTransition, getEnableTransition } = useTransitionSetting()
 
@@ -61,6 +63,7 @@
         getEnableTransition,
         getBasicTransition,
         getCaches,
+        getCanEmbedIFramePage,
       }
     },
   })

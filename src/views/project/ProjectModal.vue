@@ -15,7 +15,7 @@
   const rowId = ref('')
   const userStore = useUserStoreWithOut()
 
-  const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+  const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
     labelWidth: 100,
     baseColProps: { span: 24 },
     schemas: projectFormSchema,
@@ -56,11 +56,12 @@
       // TODO custom api
 
       console.log(values)
-      console.log(userStore.getToken)
       const result = await projectInsertApi(values)
       console.log(result)
 
       closeModal()
+    } catch (error) {
+      console.log(error)
     } finally {
       setModalProps({ confirmLoading: false })
     }
