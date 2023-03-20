@@ -149,7 +149,6 @@
         username: data.account,
         mode: 'none', //不要默认的错误提示
       })
-      console.log(userInfo)
 
       if (userInfo) {
         notification.success({

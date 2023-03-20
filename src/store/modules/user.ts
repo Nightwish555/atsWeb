@@ -92,10 +92,11 @@ export const useUserStore = defineStore({
         const { goHome = true, mode, ...loginParams } = params
         const data = await loginApi(loginParams, mode)
 
-        const { token } = data
+        const { user, token } = data
 
         // save token
         this.setToken(token)
+        this.setUserInfo(user)
         return this.afterLoginAction(goHome)
       } catch (error) {
         return Promise.reject(error)
@@ -138,7 +139,8 @@ export const useUserStore = defineStore({
         userInfo.roles = []
         this.setRoleList([])
       }
-      this.setUserInfo(userInfo)
+      // TODO 上层直接进行userInfo 赋值
+      // this.setUserInfo(userInfo)
       return userInfo
     },
     /**

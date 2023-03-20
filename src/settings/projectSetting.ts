@@ -22,7 +22,7 @@ const setting: ProjectConfig = {
   showDarkModeToggle: true,
 
   // `Settings` button position
-  settingButtonPosition: SettingButtonPositionEnum.AUTO,
+  settingButtonPosition: SettingButtonPositionEnum.FIXED,
 
   // Permission mode
   permissionMode: PermissionModeEnum.ROUTE_MAPPING,

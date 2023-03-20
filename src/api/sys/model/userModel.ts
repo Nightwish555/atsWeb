@@ -15,9 +15,9 @@ export interface RoleInfo {
  * @description: Login interface return value
  */
 export interface LoginResultModel {
-  userId: string | number
+  user: any
   token: string
-  role: RoleInfo
+  expire: number
 }
 
 /**

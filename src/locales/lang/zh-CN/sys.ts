@@ -1,7 +1,9 @@
 export default {
   api: {
+    operationSuccess: '操作成功',
     operationFailed: '操作失败',
     errorTip: '错误提示',
+    successTip: '成功提示',
     errorMessage: '操作失败,系统异常!',
     timeoutMessage: '登录超时,请重新登录!',
     apiTimeoutMessage: '接口请求超时,请刷新页面重试!',
@@ -95,4 +97,4 @@ export default {
     smsCode: '短信验证码',
     mobile: '手机号码',
   },
-}
+};
